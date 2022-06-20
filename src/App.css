@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.App {
+  text-align: center;
+}
+
+@font-face {
+  font-family: "Recia";
+  src: url("ReciaSerifDisplay-Bold.ttf");
+}
+
+input{
+  height: 30px;
+  width: 200px;
+}
+
+button{
+  height: 30px;
+  width: 208px;
+  background: black;
+  color: white;
+}
+
+button:hover{
+  background: white;
+  color: black;
+}
+
