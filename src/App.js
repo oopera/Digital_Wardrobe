@@ -2,12 +2,12 @@ import {
     BrowserRouter as Router,
     Routes,
     Route,
-    Link, Redirect, Navigate
+    Navigate
 } from "react-router-dom";
 import './App.css';
 import {useEffect, useState} from "react";
 import React from "react";
-import ImageGallery from 'react-image-gallery';
+
 
 function App() {
     const [kleidung, setKleidung] = useState([]);
@@ -127,21 +127,21 @@ function App() {
                     {open === true && (
                         <>
 
-                            <div   onClick={() => setOpen(!open)} className={"fixed inset-x-0 top-0 h-64 font-['Recia'] text-5xl border-b bg-white border-black text-center"}>
+                            <div   onClick={() => setOpen(!open)} className={"fixed inset-x-0 top-0 h-32 font-['Recia'] text-5xl border-b bg-white border-black text-center"}>
                                 KLEIDERSCHRANK </div>
-                            <div className={"fixed grid lg:grid-cols-8 md:grid-cols-4 sm:grid-cols-2 h-64 top-20 font-['Recia']" }>
+                            <div className={"fixed grid  divide-y-2 lg:grid-cols-8 grid-cols-4 h-32 top-20 font-['Recia']" }>
                                 {types.map((type) => {
                                     if(selectedTypes.includes(type)){
                                         return(
                                             <div onClick={()=> {
                                                 selectedTypes.splice(selectedTypes.findIndex(element => element === type), 1); setRerender(!render)
-                                            }} className={'min-h-40 min-w-40 h-fit bg-white text-black hover:bg-black hover:text-white'}>{type}</div>
+                                            }} className={'border border-black m-2 h-8 w-32 bg-white text-black hover:bg-slate-600 hover:text-white'}>{type}</div>
                                         )
                                     }else{
                                         return(
                                             <div onClick={()=> {
                                                 selectedTypes.push(type); setRerender(!render)
-                                            }} className={'min-h-40 min-w-40 h-fit bg-black text-white hover:bg-slate-600 hover:text-white'}>{type}</div>
+                                            }} className={'m-2 h-8 w-32 bg-black text-white hover:bg-slate-600 hover:text-white'}>{type}</div>
                                         )
                                     }
 
@@ -156,7 +156,7 @@ function App() {
 
                     <div className={'grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 mt-28  self-center items-center justify-center'}>
 
-                        <div className={'rounded-full h-40 w-80 bg-black text-white p-10 text-center align-middle text-9xl'}>+</div>
+                        <div className={'rounded-full h-40 w-80 bg-black text-white p-10 text-center self-center text-9xl'}>+</div>
                     {kleidung.map((kleid) => {
                         if ((openedItem === kleid._id && selectedTypes.includes(kleid.Type)) || (openedItem === kleid._id &&  selectedTypes.length === 0)) {
                             return (
@@ -200,11 +200,6 @@ function App() {
             )
         }
 
-        function Users() {
-            return <h2>Users</h2>;
-        }
-
-
 }
 
 export function ImageSlider(images){
@@ -231,8 +226,14 @@ export function ImageSlider(images){
     function handleChildClick(e) {
         e.stopPropagation()
     }
+    let string = 'absolute left-h-5 w-5 border rounded-full border-black ml-' + {counter}
     return(
         <div onClick={e=> handleChildClick(e)} className={'h-4/4 w-4/4'} >
+            {source.map((image) => {
+                return(
+                    <div className={string}/>
+                )
+            })}
             <div className={'absolute h-96 hover:bg-black opacity-30'} onClick={() => changeIndex('subtract')}> </div>
             <div className={'absolute h-96 w-10 ml-4/4 hover:bg-black opacity-30'} onClick={() => changeIndex('add')}> </div>
             <img alt="" className={'border h-96 border-black object-cover'} src={selImg}/>
