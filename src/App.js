@@ -103,8 +103,12 @@ function App() {
             const [open, setOpen] = useState(false)
             const [openedItem, setOpenedItem] = useState(false);
             const [render, setRerender] = useState(false);
-            function openItem(id,e ){
 
+            function addProduct(){
+                setOpenedItem(true)
+            }
+
+            function openItem(id,e){
                 if(openedItem === id){
                     setOpenedItem(false)
                 }else{
@@ -115,85 +119,90 @@ function App() {
                 <div className={'bg-white min-h-screen h-fit min-w-screen flex flex-col text-black'}>
                     {open === false && (
                         <>
-                        <div  onClick={() => setOpen(!open)} className={"fixed inset-x-0 top-0 h-16 font-['Recia'] text-5xl border-b bg-white border-black text-center"}>
-                        KLEIDERSCHRANK
-                        </div>
-
-                        <div className={'z-10 fixed w-5 h-5 top-8 border-r-2 border-b-2 border-black self-center transform: rotate-45'}
+                        <div  onClick={() => setOpen(!open)} className={"fixed inset-x-0 top-0 h-fit font-['Recia'] text-5xl border-b bg-white border-black text-center"}>
+                            <div onClick={() => setOpen(!open)} >KLEIDERSCHRANK </div>
+                        <div className={'z-10 inline-block w-5 h-5 top-8 border-r-2 border-b-2 border-black self-center transform: rotate-45'}
                              onClick={() => setOpen(!open)} />
-
+                        </div>
                         </>
                     )}
                     {open === true && (
-                        <>
 
-                            <div   onClick={() => setOpen(!open)} className={"fixed inset-x-0 top-0 h-32 font-['Recia'] text-5xl border-b bg-white border-black text-center"}>
-                                KLEIDERSCHRANK </div>
-                            <div className={"fixed grid  divide-y-2 lg:grid-cols-8 grid-cols-4 h-32 top-20 font-['Recia']" }>
-                                {types.map((type) => {
-                                    if(selectedTypes.includes(type)){
-                                        return(
-                                            <div onClick={()=> {
-                                                selectedTypes.splice(selectedTypes.findIndex(element => element === type), 1); setRerender(!render)
-                                            }} className={'border border-black m-2 h-8 w-32 bg-white text-black hover:bg-slate-600 hover:text-white'}>{type}</div>
-                                        )
-                                    }else{
-                                        return(
-                                            <div onClick={()=> {
-                                                selectedTypes.push(type); setRerender(!render)
-                                            }} className={'m-2 h-8 w-32 bg-black text-white hover:bg-slate-600 hover:text-white'}>{type}</div>
-                                        )
-                                    }
+                            <div className={"fixed inset-x-0 top-0 h-fit font-['Recia'] border-b bg-white border-black justify-center text-center"}>
+                                <div onClick={() => setOpen(!open)} className={'text-5xl'}>KLEIDERSCHRANK </div>
+                                    <div className={"inline-grid divide-y-2 lg:grid-cols-8 grid-cols-4 h-32 top-20 font-['Recia']" }>
+                                        {types.map((type) => {
+                                            if(selectedTypes.includes(type)){
+                                                return(
+                                                    <div onClick={()=> {
+                                                        selectedTypes.splice(selectedTypes.findIndex(element => element === type), 1); setRerender(!render)
+                                                    }} className={'border border-black m-2 h-fit w-32 text-2xl bg-white text-black hover:bg-slate-600 hover:text-white'}>{type}</div>
+                                                )
+                                            }else{
+                                                return(
+                                                    <div onClick={()=> {
+                                                        selectedTypes.push(type); setRerender(!render)
+                                                    }} className={'m-2 h-fit w-32 bg-black text-white hover:bg-slate-600 hover:text-white'}>{type}</div>
+                                                )
+                                            }
 
-                                })}
-                            </div>
+                                        })}
+                                    </div>
 
-                            <div className={'z-10 fixed w-5 h-5 top-12 border-t-2 border-l-2 border-black self-center transform: rotate-45'}
+
+                            <div className={'z-10 inline-block w-5 h-5 top-12 border-t-2 border-l-2 border-black self-center transform: rotate-45'}
                                  onClick={() => setOpen(!open)} />
 
-                        </>
+                            </div>
                     )}
 
                     <div className={'grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 mt-28  self-center items-center justify-center'}>
 
-                        <div className={'rounded-full h-40 w-80 bg-black text-white p-10 text-center self-center text-9xl'}>+</div>
-                    {kleidung.map((kleid) => {
-                        if ((openedItem === kleid._id && selectedTypes.includes(kleid.Type)) || (openedItem === kleid._id &&  selectedTypes.length === 0)) {
-                            return (
-                                <div onClick={(e)=>openItem(kleid._id, e)} key={kleid._id}
-                                     className={'w-full h-full bg-white text-black border border-black self-center p-10'}>
-                                    <p>{kleid.Name}</p>
-                                    <p>{kleid.Color}</p>
-                                    <p>{kleid.Size}</p>
-                                    <p>{kleid.Type}</p>
-                                    <p>{kleid.Description}</p>
-                                    <p>{kleid.Brand}</p>
-                                    <p>{kleid.Price}</p>
-                                    <ImageSlider images={kleid.Img}/>
+                        {openedItem !== true && (
+                            <>
+                        <div onClick={()=> addProduct()} className={'rounded-full h-40 w-80 bg-black text-white p-10 text-center self-center text-9xl'}>+</div>
+                            {kleidung.map((kleid) => {
+                                if ((openedItem === kleid._id && selectedTypes.includes(kleid.Type)) || (openedItem === kleid._id &&  selectedTypes.length === 0)) {
+                                    return (
+                                        <div onClick={(e)=>openItem(kleid._id, e)} key={kleid._id}
+                                             className={'w-full h-full bg-white text-black border border-black self-center p-10'}>
+                                            <p>{kleid.Name}</p>
+                                            <p>{kleid.Color}</p>
+                                            <p>{kleid.Size}</p>
+                                            <p>{kleid.Type}</p>
+                                            <p>{kleid.Description}</p>
+                                            <p>{kleid.Brand}</p>
+                                            <p>{kleid.Price}</p>
+                                            <ImageSlider images={kleid.Img}/>
 
-                                </div>
-                            )
-                        } else if(selectedTypes.includes(kleid.Type) || selectedTypes.length === 0) {
-                            return (
-                                <div onClick={(e)=>openItem(kleid._id, e)} key={kleid._id}
-                                     className={'w-3/4 h-3/4 bg-white text-black border border-black self-center justify-self-center p-10'}>
-                                    <p>Name: {kleid.Name}</p>
-                                    <p>Color: {kleid.Color}</p>
-                                    <p>Size: {kleid.Size}</p>
-                                    <p>Type: {kleid.Type}</p>
-                                    <p>Description: {kleid.Description}</p>
-                                    <p>Brand: {kleid.Brand}</p>
-                                    <p>Price: {kleid.Price}€</p>
-                                    <ImageSlider images={kleid.Img}/>
+                                        </div>
+                                    )
+                                } else if(selectedTypes.includes(kleid.Type) || selectedTypes.length === 0) {
+                                    return (
+                                        <div onClick={(e)=>openItem(kleid._id, e)} key={kleid._id}
+                                             className={'w-3/4 h-3/4 bg-white text-black border border-black self-center justify-self-center p-10'}>
+                                            <p>Name: {kleid.Name}</p>
+                                            <p>Color: {kleid.Color}</p>
+                                            <p>Size: {kleid.Size}</p>
+                                            <p>Type: {kleid.Type}</p>
+                                            <p>Description: {kleid.Description}</p>
+                                            <p>Brand: {kleid.Brand}</p>
+                                            <p>Price: {kleid.Price}€</p>
+                                            <ImageSlider images={kleid.Img}/>
 
-                                </div>
-                            )}else{
+                                        </div>
+                                    )}else{
                                 return
                         }
+                            })}
+                    </>
+                        )}
+                        {openedItem === true && (
+                        <>
+                            <div onClick={setOpenedItem}></div>
+                        </>
 
-
-                    })
-                }
+                            )}
                     </div>
 
                 </div>
